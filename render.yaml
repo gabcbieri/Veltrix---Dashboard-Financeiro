@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: dash-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci && npm run prisma:generate && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: LOGIN_TOKEN_TTL_MINUTES
+        value: 10
+      - key: LOGIN_TOKEN_LENGTH
+        value: 6
+      - key: LOGIN_TOKEN_DEV_EXPOSE
+        value: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_SECURE
+        value: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dash-db
+          property: connectionString
+
+databases:
+  - name: dash-db

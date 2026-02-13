@@ -1,0 +1,67 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+html.theme-light {
+  color-scheme: light;
+  --bg-page: #eff2f0;
+  --surface: #ffffff;
+  --surface-soft: #f6f8f7;
+  --surface-muted: #edf2ef;
+  --border: #dfe6e1;
+  --text-primary: #102017;
+  --text-muted: #6f7e76;
+  --accent-strong: #157347;
+  --accent-soft: #d9f3e4;
+  --danger: #d95a5a;
+}
+
+html.theme-dark {
+  color-scheme: dark;
+  --bg-page: #0f1714;
+  --surface: #16221d;
+  --surface-soft: #1a2822;
+  --surface-muted: #22322b;
+  --border: #2e4138;
+  --text-primary: #ebf2ee;
+  --text-muted: #a0b1a9;
+  --accent-strong: #63d39a;
+  --accent-soft: #1f3a2d;
+  --danger: #ff7d7d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.welcome-pop {
+  animation: welcome-pop 0.45s ease-out;
+}
+
+@keyframes welcome-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  income
+  expense
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  avatarUrl    String?
+  passwordHash String
+  categories   Category[]
+  transactions Transaction[]
+  loginTokens  LoginToken[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  name         String
+  isSystem     Boolean       @default(false)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([userId])
+  @@unique([userId, name])
+}
+
+model Transaction {
+  id         String          @id @default(cuid())
+  title      String
+  amount     Float
+  type       TransactionType
+  date       DateTime
+  userId     String
+  categoryId String
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([userId, date])
+  @@index([categoryId])
+}
+
+model LoginToken {
+  id        String   @id @default(cuid())
+  tokenHash String
+  expiresAt DateTime
+  usedAt    DateTime?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
+}
