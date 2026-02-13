@@ -4,7 +4,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "start:prod": "npm run start",
     "test": "npm run build && node --test tests/api.test.mjs",
