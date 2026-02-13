@@ -12,7 +12,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio"
-  },
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",
